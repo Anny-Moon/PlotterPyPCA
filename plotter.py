@@ -25,13 +25,14 @@ azimut = None;
 axisOnOff ='off';
 #=======================================
 
+import sys
+sys.path.append('Plotter_lib/');
 
 import matplotlib.pyplot as plt
 import Polymer
 import EqualAxes
 import Color
-import sys
-sys.path.append('Plotter_lib/');
+
 
 if(len(sys.argv)<2):
     print(__doc__);

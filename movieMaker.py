@@ -37,12 +37,13 @@ elevation = None;
 azimut = None;
 axisOnOff ='off';
 #=======================================
+import sys
+sys.path.append('Plotter_lib/');
 
 import matplotlib.pyplot as plt
 import Polymer
 import EqualAxes
 import Color
-import sys
 import math
 import matplotlib.animation as animation
 
