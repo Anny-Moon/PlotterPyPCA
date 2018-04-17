@@ -1,7 +1,7 @@
 """
 Run me like this:
-python ./plotter.py <path/fileIn.ext> <configurations>
-python ./movieMaker.py data/5dn7_rescaled.pca 30 44 58
+python ./plotter.py <path/chain1.ext> <path/chain2.ext> <"show" or the name of the file to save> <configurations>
+python ./movieMaker.py data/1abs.pca data/1abs2.pca 1abs2ch.pdf 30 44 58
 
 If you pass only the first argument then I will
 plot the  0-th configuration.
@@ -29,6 +29,8 @@ azimut = None;
 axisOnOff ='on';
 #=======================================
 
+import sys
+sys.path.append('Plotter_lib/');
 
 import matplotlib.pyplot as plt
 import Polymer
@@ -39,12 +41,13 @@ import random
 
 random.seed(randomSeed);
 
-if(len(sys.argv)<2):
+if(len(sys.argv)<3):
     print(__doc__);
     exit();
-#fileName = sys.argv[1];
-fileName = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR.dat";
-fileName2 = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR2.dat";
+fileName = sys.argv[1];
+fileName2 = sys.argv[2];
+#fileName = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR.dat";
+#fileName2 = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR2.dat";
 polymer = Polymer.Polymer(fileName);
 polymer2 = Polymer.Polymer(fileName2);
 
@@ -53,7 +56,7 @@ ax = fig.gca(projection='3d');
 ax.set_aspect('equal');
 eqAx = EqualAxes.EqualAxes(ax);
 
-if(len(sys.argv)<3):
+if(len(sys.argv)<5):
     confNum = 0;
     eqAx.push(polymer.getX(confNum),polymer.getY(confNum),polymer.getZ(confNum));
     eqAx.push(polymer2.getX(confNum),polymer2.getY(confNum),polymer2.getZ(confNum));
@@ -65,14 +68,14 @@ if(len(sys.argv)<3):
     polymer2.plot(confNum, eqAx, dotSize, lineSize, dotSmartColors2, lineColor2);
     
 else:
-    for i in range(2,len(sys.argv)):
+    for i in range(4,len(sys.argv)):
 	confNum = int(sys.argv[i]);
 	print('Chain %s has %i atoms.' % (sys.argv[i], polymer.getN(confNum)));
 	eqAx.push(polymer.getX(confNum),polymer.getY(confNum),polymer.getZ(confNum));
 	eqAx.push(polymer2.getX(confNum),polymer2.getY(confNum),polymer2.getZ(confNum));
 
 	
-    for i in range(2,len(sys.argv)):
+    for i in range(4,len(sys.argv)):
 	confNum = int(sys.argv[i]);
 	dotSmartColors = Color.arrayWithSmartColors(polymer.getChainLenght(0),
 		dotHueDispersion, dotSaturationDispersion, dotVolumeDispersion, dotColor);
@@ -88,4 +91,7 @@ else:
 eqAx.set();
 ax.view_init(elevation, azimut);
 plt.axis(axisOnOff);
-plt.show();
+if(sys.argv[3] == 'show'):
+    plt.show();
+else:
+    fig.savefig(sys.argv[3]);

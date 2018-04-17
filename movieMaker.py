@@ -70,6 +70,7 @@ polymer = Polymer.Polymer(fileNameIn);
 dotSmartColors = Color.arrayWithSmartColors(polymer.getChainLenght(0),
 		dotHueDispersion, dotSaturationDispersion, dotVolumeDispersion, dotColor);
 fig = plt.figure()
+fig.set_size_inches(3, 3, True)
 ax = fig.gca(projection='3d');
 ax.set_aspect('equal');
 eqAx = EqualAxes.EqualAxes(ax);

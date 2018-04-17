@@ -1,7 +1,7 @@
 """
 Run me like this:
-python ./plotter.py <path/fileIn.ext> <configurations>
-python ./movieMaker.py data/5dn7_rescaled.pca 30 44 58
+python ./plotter.py <path/fileIn.ext> <"show" or the name of the file to save> <configurations> 
+python ./movieMaker.py data/1abs.pca 1abs.pdf 30 44 58 
 
 If you pass only the first argument then I will
 plot the  0-th configuration.
@@ -45,7 +45,9 @@ ax = fig.gca(projection='3d');
 ax.set_aspect('equal');
 eqAx = EqualAxes.EqualAxes(ax);
 
-if(len(sys.argv)<3):
+
+
+if(len(sys.argv)<4):
     confNum = 0;
     eqAx.push(polymer.getX(confNum),polymer.getY(confNum),polymer.getZ(confNum));
     dotSmartColors = Color.arrayWithSmartColors(polymer.getChainLenght(0),
@@ -53,13 +55,13 @@ if(len(sys.argv)<3):
     polymer.plot(confNum, eqAx, dotSize, lineSize, dotSmartColors, lineColor);
     
 else:
-    for i in range(2,len(sys.argv)):
+    for i in range(3,len(sys.argv)):
 	confNum = int(sys.argv[i]);
 	print('Chain %s has %i atoms.' % (sys.argv[i], polymer.getN(confNum)));
 	eqAx.push(polymer.getX(confNum),polymer.getY(confNum),polymer.getZ(confNum));
 
 	
-    for i in range(2,len(sys.argv)):
+    for i in range(3,len(sys.argv)):
 	confNum = int(sys.argv[i]);
 	dotSmartColors = Color.arrayWithSmartColors(polymer.getChainLenght(0),
 		dotHueDispersion, dotSaturationDispersion, dotVolumeDispersion, dotColor);
@@ -71,4 +73,8 @@ else:
     
 eqAx.set();
 plt.axis(axisOnOff);
-plt.show();
+
+if(sys.argv[2] == 'show'):
+    plt.show();
+else:
+    fig.savefig(sys.argv[2]);

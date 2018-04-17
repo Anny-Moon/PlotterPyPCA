@@ -38,6 +38,8 @@ elevation = None;
 azimut = None;
 axisOnOff ='on';
 #=======================================
+import sys
+sys.path.append('Plotter_lib/');
 
 import matplotlib.pyplot as plt
 import Polymer
