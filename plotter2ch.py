@@ -95,4 +95,4 @@ plt.axis(axisOnOff);
 if(len(sys.argv)<4 or sys.argv[3] == 'show'):
     plt.show();
 else:
-    fig.savefig(sys.argv[2]);
+    fig.savefig(sys.argv[3]);
