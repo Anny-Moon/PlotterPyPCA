@@ -1,7 +1,7 @@
 """
 Run me like this:
-python ./plotter.py <path/fileIn.ext> <"show" or the name of the file to save> <configurations> 
-python ./movieMaker.py data/1abs.pca 1abs.pdf 30 44 58 
+python ./plotter.py <path/pcaFile> <"show" or the name of the file to save> <configurations> 
+python ./movieMaker.py data/1abs 1abs.pdf 30 44 58 
 
 If you pass only the first argument then I will
 plot the  0-th configuration.
@@ -38,14 +38,12 @@ if(len(sys.argv)<2):
     print(__doc__);
     exit();
 fileName = sys.argv[1];
-polymer = Polymer.Polymer(fileName);
+polymer = Polymer.Polymer(fileName+".pca");
 
 fig = plt.figure()
 ax = fig.gca(projection='3d');
 ax.set_aspect('equal');
 eqAx = EqualAxes.EqualAxes(ax);
-
-
 
 if(len(sys.argv)<4):
     confNum = 0;
@@ -74,7 +72,7 @@ else:
 eqAx.set();
 plt.axis(axisOnOff);
 
-if(sys.argv[2] == 'show'):
+if(len(sys.argv)<3 or sys.argv[2] == 'show'):
     plt.show();
 else:
     fig.savefig(sys.argv[2]);

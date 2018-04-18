@@ -1,11 +1,11 @@
 """\
 Run it like this:
-python ./movieMaker.py <path/fileIn.ext> <increment> <gif/mp4> <path/fileOut>
-python ./movieMaker.py 5dn7.pca 3 gif movie
+python ./movieMaker.py <path/pcaFileIn> <increment> <gif/mp4> <path/fileOut>
+python ./movieMaker.py 5dn7 3 gif movie
 
 If you pass only the first (and second) argument then
 no file will be generated, but everything will be 
-showen on screen.
+showen on the screen.
 
 !!!
 For saving option you need additional packages which
@@ -66,7 +66,7 @@ if(len(sys.argv)<2):
     exit();
 
 fileNameIn = sys.argv[1];
-polymer = Polymer.Polymer(fileNameIn);
+polymer = Polymer.Polymer(fileNameIn+".pca");
 dotSmartColors = Color.arrayWithSmartColors(polymer.getChainLenght(0),
 		dotHueDispersion, dotSaturationDispersion, dotVolumeDispersion, dotColor);
 fig = plt.figure()

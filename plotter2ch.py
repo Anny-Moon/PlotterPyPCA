@@ -1,9 +1,9 @@
 """
 Run me like this:
-python ./plotter.py <path/chain1.ext> <path/chain2.ext> <"show" or the name of the file to save> <configurations>
-python ./movieMaker.py data/1abs.pca data/1abs2.pca 1abs2ch.pdf 30 44 58
+python ./plotter.py <path/pcaChain1> <path/pcaChain2> <"show" or the name of the file to save> <configurations>
+python ./movieMaker.py data/1abs data/1abs2 1abs2ch.pdf 30 44 58
 
-If you pass only the first argument then I will
+If you pass only the first two argument then I will
 plot the  0-th configuration.
 """
 
@@ -48,8 +48,8 @@ fileName = sys.argv[1];
 fileName2 = sys.argv[2];
 #fileName = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR.dat";
 #fileName2 = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR2.dat";
-polymer = Polymer.Polymer(fileName);
-polymer2 = Polymer.Polymer(fileName2);
+polymer = Polymer.Polymer(fileName+".pca");
+polymer2 = Polymer.Polymer(fileName2+".pca");
 
 fig = plt.figure()
 ax = fig.gca(projection='3d');
@@ -91,7 +91,8 @@ else:
 eqAx.set();
 ax.view_init(elevation, azimut);
 plt.axis(axisOnOff);
-if(sys.argv[3] == 'show'):
+
+if(len(sys.argv)<4 or sys.argv[3] == 'show'):
     plt.show();
 else:
-    fig.savefig(sys.argv[3]);
+    fig.savefig(sys.argv[2]);

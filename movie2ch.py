@@ -1,11 +1,14 @@
 """\
 Run it like this:
-python ./movieMaker.py <path/fileIn.ext> <increment> <gif/mp4> <path/fileOut>
-python ./movieMaker.py 5dn7.pca 3 gif movie
+python ./movieMaker.py <path/pcaFile1> <path/pcaFile2> <increment> <gif/mp4> <path/fileOut>
+python ./movieMaker.py chain1 chain2  3 gif movie
 
-If you pass only the first (and second) argument then
-no file will be generated, but everything will be 
-showen on screen.
+If you pass only the first two arguments (and the third)
+argument then no file will be generated, but everything
+will be showen on the screen.
+
+The number of congigurations in pcaFile1 and pcaFile2
+should me the same.
 
 !!!
 For saving option you need additional packages which
@@ -66,13 +69,16 @@ def update(i, increment):
 	ax.view_init(elevation, azimut);
 	plt.axis(axisOnOff);
 
-if(len(sys.argv)<2):
+if(len(sys.argv)<3):
     print(__doc__);
     exit();
 
 fileNameIn = "test.txt";
-fileName = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR.dat";
-fileName2 = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR2.dat";
+#fileName = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR.dat";
+#fileName2 = "/Users/annsi118/Documents/Git_projects/PCMC/Projects/MonteCarlo2chains/results/Configurations/0confR2.dat";
+
+fileName = sys.argv[1]+".pca";
+fileName2 = sys.argv[2]+".pca";
 
 polymer = Polymer.Polymer(fileName);
 polymer2 = Polymer.Polymer(fileName2);
@@ -96,8 +102,8 @@ plt.axis(axisOnOff);
 increment = 1;
 
 #if pass increment
-if(len(sys.argv)>2):
-    increment = int(sys.argv[2]);
+if(len(sys.argv)>3):
+    increment = int(sys.argv[3]);
     if(increment < 1):
 	increment = 1;
 if(frames==None):
@@ -111,22 +117,22 @@ anim = animation.FuncAnimation(fig, update,
 		    );
 
 #if no saving
-if(len(sys.argv)<4):
+if(len(sys.argv)<5):
     plt.show();
 
 #if save
 else:
-    extention = sys.argv[3];
+    extention = sys.argv[4];
     fileName=fileNameIn[:-3];
     fileNameOut=fileName +extention;
     
     #if pass fileNameOut
-    if(len(sys.argv)>4):
-	fileNameOut = sys.argv[4] +"."+ extention;
+    if(len(sys.argv)>5):
+	fileNameOut = sys.argv[5] +"."+ extention;
     
-    if(sys.argv[3]=='gif'):
+    if(sys.argv[4]=='gif'):
 	writer = animation.ImageMagickFileWriter(fps=fps);
-    if(sys.argv[3]=='mp4'):
+    if(sys.argv[4]=='mp4'):
 	writer = animation.FFMpegWriter(fps=fps);
 	
     anim.save(fileNameOut, writer=writer, dpi=dpi);
